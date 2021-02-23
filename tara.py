@@ -85,11 +85,6 @@ if 'Write your own' in answers["variables"]:
     answers["variables"] = [own if i=='Write your own' else i for i in answers["variables"]]
     
 ###################################################################
-#reads for command to search output 
-if 'Enter Command :' in answers["variables"]:
-    cmd = input("please enter Command to output log:")
-    cmd = cmd+''
-###################################################################
 #opens all the files and writes line by line in log.txt document
 logs = open('logs.txt',"w+")
 for path, subdirs, files in os.walk(name):
@@ -99,6 +94,26 @@ for path, subdirs, files in os.walk(name):
             with open(filename) as infile:
                 for line in infile:
                     logs.write(line)
+####################################################################
+#reads text file to find corners  
+cornerCount1 = 0
+corner1=[]
+#opens text file to read line by line
+with open("logs.txt") as L:
+    for line in L:
+    # look for corner
+        if 'Corner Name :' in line and 'PST' not in line and line not in corner1:
+            cornerCount1 +=1
+cornercount1 = str(cornerCount1)
+if 'Enter Command :' in answers["variables"]:
+    cmd = input("please enter Command to output log:")
+    print ('There are ' ,cornerCount1,'corners, Example for entry : 2 3 4 ')
+    cornerPrint1 = input("Write the number of corner separated but a space (0 for all):")
+    cornerPrint = cornerPrint1.split()
+    for i in range(0, len(cornerPrint)): 
+        cornerPrint[i] = int(cornerPrint[i]) 
+    print(cornerPrint)
+    cmd = cmd+' '
 ###################################################################
 #look up for text line by line 
 #### varibles
@@ -146,6 +161,7 @@ cmdLog = []
 cmdStart = 10000000
 ii = 0
 full = 0
+cornerCount = 0
 switchNumber1 = 'first777#$'
 if 'Enter Command :' in answers["variables"]:
     print(Fore.BLACK)
@@ -158,6 +174,7 @@ if 'Enter Command :' in answers["variables"]:
             if 'Corner Name :' in line and 'PST' not in line and line not in corner:
                 corner = line
                 count = 0
+                cornerCount += 1 
                 print(Fore.BLACK)
                 print (Back.WHITE+'                     >  '+corner)
                 print(Style.RESET_ALL)
@@ -180,13 +197,15 @@ if 'Enter Command :' in answers["variables"]:
                 full = 1
             if ii >= cmdStart and ii < cmdStop and line not in cmdLog:
                 cmdLog.append(line)
-            if "*************************************************" in line or "--------------------------------------------------" in line or "--------------------------------------------------" in line:
+            if "*********************************" in line or "----------------------------------" in line or "==========================================" in line:
                 cmdStop = ii
             if 'TESTCASE END' and full == 1:
-                cmdLog = list(filter(None, cmdLog))
-                print(*cmdLog, sep = "\n")
-                cmdLog.clear()
-                full = 0
+                for i in cornerPrint:
+                    if i == cornerCount or i == 0:
+                        cmdLog = list(filter(None, cmdLog))
+                        print(*cmdLog, sep = "\n")
+                        cmdLog.clear()
+                        full = 0
 #################################################################
 #this part is to make an excel report on test
 ##variables
