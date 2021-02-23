@@ -11,7 +11,7 @@
 3. Install python, necesary libraries, and run tara.py
 
 
-## Enter on Windows Terminal to install necesary libraries and python
+## Enter on Windows Terminal to install necessary libraries and python
 
 python
 
