@@ -4,14 +4,14 @@
 
 
 ## Instructions
-1.Download the file tara.py 
+1. Download the file tara.py 
 
 2. Download the log file to analyze 
 
 3. Install python, necesary libraries, and run tara.py
 
 
-## Enter on Windows Terminal to intstall necesary libraries and python
+## Enter on Windows Terminal to install necesary libraries and python
 
 python
 
