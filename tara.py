@@ -104,15 +104,13 @@ with open("logs.txt") as L:
     # look for corner
         if 'Corner Name :' in line and 'PST' not in line and line not in corner1:
             cornerCount1 +=1
-cornercount1 = str(cornerCount1)
 if 'Enter Command :' in answers["variables"]:
     cmd = input("please enter Command to output log:")
-    print ('There are ' ,cornerCount1,'corners, Example for entry : 2 3 4 ')
-    cornerPrint1 = input("Write the number of corner separated but a space (0 for all):")
+    print ('There are ' ,cornerCount1,'corners, Example for entry : 1 2 3 ')
+    cornerPrint1 = input("Write the number of corner separated by a space(type 0 for all):")
     cornerPrint = cornerPrint1.split()
     for i in range(0, len(cornerPrint)): 
         cornerPrint[i] = int(cornerPrint[i]) 
-    print(cornerPrint)
     cmd = cmd+' '
 ###################################################################
 #look up for text line by line 
