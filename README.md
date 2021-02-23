@@ -4,20 +4,14 @@ Program done to analyse long test reports that come in a tar.gz folder
 
 
 ##Instructions
- Download the file tara.py 
-tara.py
+1.Download the file tara.py 
 
 2. Download the log file to analyze 
 
+3. Install python and necesary libraries and run tara.py
 
 
-
-
-3. Install python and run tara.py
-
------WINDOWS Terminal
-
-# intstall necesary libraries and python
+##Enter on Windows Terminal to intstall necesary libraries and python
 
 python
 
@@ -33,20 +27,14 @@ pip install PyInquirer
 pip install numpy==1.19.3
 
  pip install openpyxl
-## after downloading file tara.py go to downloads
 
 cd Downloads
-
-## run program
 
 python tara.py
 
 
 
-
--------MAC Terminal
-
-##### install Xcode and libraries 
+## Enter on Mac Terminal
 
 xcode-select --install
 
@@ -64,11 +52,11 @@ pip install PyInquirer
 
 pip install numpy==1.19.3
 
-## after downloading file tara.py go to downloads
+
 
 cd Downloads
 
-## run program
+
 
 python tara.py
 
