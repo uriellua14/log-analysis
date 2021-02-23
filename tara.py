@@ -136,7 +136,7 @@ with open("logs.txt") as L:
     # using re.py to search for switch number
         if 'TESTCASE START -' in line and switchNumber not in line:
             xx=[]
-            count = 0
+            count = 0 
             xx =  re.search(r'\w\w\w\w\w\w\d(\d)?', line)
             switchNumber = str(xx.group())
             print (Fore.GREEN+(switchNumber))
