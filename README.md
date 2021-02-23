@@ -1,17 +1,17 @@
 # log-analysis
 
-Program done to analyse long test reports that come in a tar.gz folder 
+### Program done to analyse long test reports that come in a tar.gz folder 
 
 
-##Instructions
+## Instructions
 1.Download the file tara.py 
 
 2. Download the log file to analyze 
 
-3. Install python and necesary libraries and run tara.py
+3. Install python, necesary libraries, and run tara.py
 
 
-##Enter on Windows Terminal to intstall necesary libraries and python
+## Enter on Windows Terminal to intstall necesary libraries and python
 
 python
 
@@ -52,11 +52,7 @@ pip install PyInquirer
 
 pip install numpy==1.19.3
 
-
-
 cd Downloads
-
-
 
 python tara.py
 
