@@ -237,6 +237,7 @@ if '->Make Excel report' in answers["variables"]:
 ############ add errors to second sheet in excel
             if 'Corner Name :' in line and 'PST' not in line and line not in corner:
                 cornerE = line
+                cornerE = '---------------'+ cornerE
                 countE = 0
                 two.append(cornerE)
             #Looks for Testcase number
@@ -257,14 +258,67 @@ if '->Make Excel report' in answers["variables"]:
                 testExcel = str(countE) + "--" + testExcel
                 two.append(testExcel)
                 two.extend(failsE)
-    #clearing error list
+            #clearing error list
             if 'TESTCASE END -' in line:
                 failsE.clear()
+###########################################################
+############add coomannd log if any to third sheet in excel 
+#variables
+cmdLogE = []
+cmdStartE = 10000000
+iE = 0
+fullE = 0
+cornerLE = ''
+switchNumber1E = 'first777#$'
+three = []
+cornerCountE = 0
+if 'Enter Command :' in answers["variables"]:
+    with open("logs.txt") as B:
+        for line in B:
+            iE += 1
+    # look for corner
+            if 'Corner Name :' in line and 'PST' not in line and line not in cornerLE:
+                cornerLE = line
+                cornerLE = '---------------'+ cornerLE
+                countLogE = 0
+                cornerCountE += 1
+                three.append(cornerLE)
+    #Looks for Testcase number
+            if 'TESTCASE START -' in line :
+                testLog = line
+    # using re.py to search for switch number
+            if 'TESTCASE START -' in line and switchNumber1E not in line:
+                xlx=[]
+                countLogE = 0
+                xlx =  re.search(r'\w\w\w\w\w\w\d(\d)?', line)
+                switchNumber1E = str(xlx.group())
+                three.append(switchNumber1E)
+    # looking for comand output
+            if line.startswith(cmd) and line not in cmdLogE:
+                cmdLogE.append(line)
+                cmdStartE = iE
+                cmdStopE = 10000000
+                fullE = 1
+            if iE >= cmdStartE and iE < cmdStopE and line not in cmdLogE:
+                cmdLogE.append(line)
+            if "*********************************" in line or "----------------------------------" in line or "==========================================" in line:
+                cmdStopE = iE
+            #print command output
+            if 'TESTCASE END' and fullE == 1:
+                for i in cornerPrint:
+                    if i == cornerCountE or i == 0:
+                        cmdLogE = list(filter(None, cmdLogE))
+                        three.extend(cmdLogE)
+                        cmdLogE.clear()
+                        fullE = 0
+
     one = pd.Series(one)
     two = pd.Series(two)
+    three = pd.Series(three)
     w = pd.ExcelWriter(nameEx)
     one.to_excel(w,'Test Info')
     two.to_excel(w,'Test Errors')
+    three.to_excel(w,'Command Log')
     w.save()
     quit()
 
