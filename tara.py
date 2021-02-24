@@ -213,6 +213,12 @@ testName = []
 jobID = []
 nameEx = name + ".xlsx"
 one = []
+two = []
+three = []
+testExcel = []
+switchExcel = 'first777#$'
+failsE = []
+cornerE = ''
 #makes first sheet in excel - Test info
 if '->Make Excel report' in answers["variables"]:
     with open("logs.txt") as E:
@@ -227,9 +233,38 @@ if '->Make Excel report' in answers["variables"]:
                 one.append(line)
             if "System Serial Number" in line and line not in one:
                 one.append(line)
+            # look for corner
+############ add errors to second sheet in excel
+            if 'Corner Name :' in line and 'PST' not in line and line not in corner:
+                cornerE = line
+                countE = 0
+                two.append(cornerE)
+            #Looks for Testcase number
+            if 'TESTCASE START -' in line :
+                testExcel = line
+            # using re.py to search for switch number
+            if 'TESTCASE START -' in line and switchExcel not in line:
+                xex=[] 
+                xex =  re.search(r'\w\w\w\w\w\w\d(\d)?', line)
+                switchExcel = str(xex.group())
+                two.append(switchExcel)
+            #adding to list with errors
+            for i in answers["variables"]:
+                if i in line and i not in failsE:
+                    failsE.append(line)
+            if len(failsE) > 0 and 'TESTCASE END -' in line:
+                countE += 1
+                testExcel = str(countE) + "--" + testExcel
+                two.append(testExcel)
+                two.extend(failsE)
+    #clearing error list
+            if 'TESTCASE END -' in line:
+                failsE.clear()
     one = pd.Series(one)
+    two = pd.Series(two)
     w = pd.ExcelWriter(nameEx)
     one.to_excel(w,'Test Info')
+    two.to_excel(w,'Test Errors')
     w.save()
     quit()
 
