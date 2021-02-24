@@ -79,7 +79,7 @@ questions = [
 
 answers = prompt(questions, style=style)
 ###################################################################
-#reads for new entry
+#reads for new entry "write yout own"
 if 'Write your own' in answers["variables"]:
     own = input("Please enter the error you are looking for: ")
     answers["variables"] = [own if i=='Write your own' else i for i in answers["variables"]]
@@ -98,29 +98,30 @@ for path, subdirs, files in os.walk(name):
 #reads text file to find corners  
 cornerCount1 = 0
 corner1=[]
-#opens text file to read line by line
 with open("logs.txt") as L:
     for line in L:
-    # look for corner
         if 'Corner Name :' in line and 'PST' not in line and line not in corner1:
             cornerCount1 +=1
+###################################################################
+#reads for new entry "Enter Command"
 if 'Enter Command :' in answers["variables"]:
     cmd = input("please enter Command to output log:")
     print ('There are ' ,cornerCount1,'corners, Example for entry : 1 2 3 ')
     cornerPrint1 = input("Write the number of corner separated by a space(type 0 for all):")
     cornerPrint = cornerPrint1.split()
+    #makes list int
     for i in range(0, len(cornerPrint)): 
         cornerPrint[i] = int(cornerPrint[i]) 
     cmd = cmd+' '
 ###################################################################
-#look up for text line by line 
-#### varibles
+#look up for errors line by line 
+#varibles
 count = 0
 corner = ''
 fails = []
 switch = []
 switchNumber = 'first777#$'
-#opens text file to read line by line
+#opens text file to read
 with open("logs.txt") as L:
     for line in L:
     # look for corner
@@ -197,6 +198,7 @@ if 'Enter Command :' in answers["variables"]:
                 cmdLog.append(line)
             if "*********************************" in line or "----------------------------------" in line or "==========================================" in line:
                 cmdStop = ii
+            #print command output
             if 'TESTCASE END' and full == 1:
                 for i in cornerPrint:
                     if i == cornerCount or i == 0:
@@ -207,28 +209,30 @@ if 'Enter Command :' in answers["variables"]:
 #################################################################
 #this part is to make an excel report on test
 ##variables
-"""testName = []
+testName = []
 jobID = []
 nameEx = name + ".xlsx"
+one = []
+#makes first sheet in excel - Test info
 if '->Make Excel report' in answers["variables"]:
     with open("logs.txt") as E:
         for line in E:
-            if "job_name " in line and  len(testName)<1:
-                testName.append(line)
-            if "Starting Job Id " in line and len(jobID)<1:
-                jobID.append(line)
-                one = pd.Series([testName,jobID])
-            if "Motherboard serial number" in line and line not in one:
+            if "Starting Job Id " in line and len(one)<1:
                 one.append(line)
-            if "System derial number" in line and line not in one:
+            if "job_name" in line and  len(one)<2:
                 one.append(line)
-            if "Model number" in line and line not in one:
+            if "Model Number" in line and line not in one:
                 one.append(line)
+            if "Motherboard Serial Number" in line and line not in one:
+                one.append(line)
+            if "System Serial Number" in line and line not in one:
+                one.append(line)
+    one = pd.Series(one)
     w = pd.ExcelWriter(nameEx)
     one.to_excel(w,'Test Info')
     w.save()
     quit()
 
 quit()
-"""
+
 
