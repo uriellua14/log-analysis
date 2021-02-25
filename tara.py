@@ -220,6 +220,8 @@ four = []
 fourCorner = ''
 fourSwitch = 'first777#$'
 fourFails = 0
+do = 0
+sfp = []
 #makes first sheet in excel - Test info
 if '->Make Excel report' in answers["variables"]:
     with open("logs.txt") as E:
@@ -235,6 +237,18 @@ if '->Make Excel report' in answers["variables"]:
             if "System Serial Number" in line and line not in one:
                 one.append(line)
             # look for corner
+############ add sfp info to SFP sheet in excel 
+            if 'sfpee' in line:
+                do = 1
+            if do == 1:
+                if " Transceiver" in line and line not in sfp:
+                    sfp.append(line)
+                if " Vendor PN" in line and line not in sfp:
+                    sfp.append(line)
+                if " Vendor SN" in line and line not in sfp:
+                    sfp.append(line)
+                if " Extended ID" in line and line not in sfp:
+                    sfp.append(line)
 ############ add errors to second sheet in excel
             if 'Corner Name :' in line and 'PST' not in line and line not in corner:
                 cornerE = line
@@ -322,12 +336,16 @@ two = pd.Series(two)
 if 'Enter Command :' in answers["variables"]:
     three = pd.Series(three)
 four = pd.Series(four)
+if do == 1:
+    sfp = pd.Series(sfp)
 w = pd.ExcelWriter(nameEx)
 one.to_excel(w,'Test Info')
 two.to_excel(w,'Test Errors')
 if 'Enter Command :' in answers["variables"]:
     three.to_excel(w,'Command Log')
 four.to_excel(w,'graphs')
+if do == 1:
+    sfp.to_excel(w,'SFP')
 w.save()
 quit()
 
