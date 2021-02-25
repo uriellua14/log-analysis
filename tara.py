@@ -219,6 +219,11 @@ testExcel = []
 switchExcel = 'first777#$'
 failsE = []
 cornerE = ''
+####
+four = []
+fourCorner = ''
+fourSwitch = 'first777#$'
+fourFails = 0
 #makes first sheet in excel - Test info
 if '->Make Excel report' in answers["variables"]:
     with open("logs.txt") as E:
@@ -237,9 +242,9 @@ if '->Make Excel report' in answers["variables"]:
 ############ add errors to second sheet in excel
             if 'Corner Name :' in line and 'PST' not in line and line not in corner:
                 cornerE = line
-                cornerE = '---------------'+ cornerE
                 countE = 0
                 two.append(cornerE)
+                fourCorner = re.search(r"\{.*?}", line).group(0)
             #Looks for Testcase number
             if 'TESTCASE START -' in line :
                 testExcel = line
@@ -248,16 +253,23 @@ if '->Make Excel report' in answers["variables"]:
                 xex=[] 
                 xex =  re.search(r'\w\w\w\w\w\w\d(\d)?', line)
                 switchExcel = str(xex.group())
+                fourSwitch = str(xex.group())
                 two.append(switchExcel)
             #adding to list with errors
             for i in answers["variables"]:
                 if i in line and i not in failsE:
                     failsE.append(line)
+                    fourFails += 1
             if len(failsE) > 0 and 'TESTCASE END -' in line:
                 countE += 1
                 testExcel = str(countE) + "--" + testExcel
                 two.append(testExcel)
                 two.extend(failsE)
+                ### to make a graph
+                four.append(fourCorner)
+                four.append(fourSwitch)
+                four.append(countE)
+                four.append(fourFails)
             #clearing error list
             if 'TESTCASE END -' in line:
                 failsE.clear()
@@ -276,24 +288,24 @@ if 'Enter Command :' in answers["variables"]:
     with open("logs.txt") as B:
         for line in B:
             iE += 1
-    # look for corner
+            # look for corner
             if 'Corner Name :' in line and 'PST' not in line and line not in cornerLE:
                 cornerLE = line
                 cornerLE = '---------------'+ cornerLE
                 countLogE = 0
                 cornerCountE += 1
                 three.append(cornerLE)
-    #Looks for Testcase number
+            #Looks for Testcase number
             if 'TESTCASE START -' in line :
                 testLog = line
-    # using re.py to search for switch number
+            # using re.py to search for switch number
             if 'TESTCASE START -' in line and switchNumber1E not in line:
                 xlx=[]
                 countLogE = 0
                 xlx =  re.search(r'\w\w\w\w\w\w\d(\d)?', line)
                 switchNumber1E = str(xlx.group())
                 three.append(switchNumber1E)
-    # looking for comand output
+            # looking for comand output
             if line.startswith(cmd) and line not in cmdLogE:
                 cmdLogE.append(line)
                 cmdStartE = iE
@@ -311,17 +323,22 @@ if 'Enter Command :' in answers["variables"]:
                         three.extend(cmdLogE)
                         cmdLogE.clear()
                         fullE = 0
-
-    one = pd.Series(one)
-    two = pd.Series(two)
+################################################################
+#print to excel
+one = pd.Series(one)
+two = pd.Series(two)
+if 'Enter Command :' in answers["variables"]:
     three = pd.Series(three)
-    w = pd.ExcelWriter(nameEx)
-    one.to_excel(w,'Test Info')
-    two.to_excel(w,'Test Errors')
+four = pd.Series(four)
+w = pd.ExcelWriter(nameEx)
+one.to_excel(w,'Test Info')
+two.to_excel(w,'Test Errors')
+if 'Enter Command :' in answers["variables"]:
     three.to_excel(w,'Command Log')
-    w.save()
-    quit()
-
+four.to_excel(w,'graphs')
+w.save()
 quit()
+
+
 
 
