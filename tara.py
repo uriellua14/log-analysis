@@ -136,10 +136,8 @@ with open("logs.txt") as L:
             testn = line
     # using re.py to search for switch number
         if 'TESTCASE START -' in line and switchNumber not in line:
-            xx=[]
             count = 0 
-            xx =  re.search(r'\w\w\w\w\w\w\d(\d)?', line)
-            switchNumber = str(xx.group())
+            switchNumber = re.search(r'\w\w\w\w\w\w\d(\d)?', line).group(0)
             print (Fore.GREEN+(switchNumber))
             print(Style.RESET_ALL)
     #adding to list with errors
@@ -181,11 +179,9 @@ if 'Enter Command :' in answers["variables"]:
             if 'TESTCASE START -' in line :
                 testn = line
     # using re.py to search for switch number
-            if 'TESTCASE START -' in line and switchNumber not in line:
-                xx=[]
+            if 'TESTCASE START -' in line and switchNumber1 not in line:
                 count = 0
-                xx =  re.search(r'\w\w\w\w\w\w\d(\d)?', line)
-                switchNumber1 = str(xx.group())
+                switchNumber1 = re.search(r'\w\w\w\w\w\w\d(\d)?', line).group(0)
                 print (Fore.GREEN+(switchNumber1))
                 print(Style.RESET_ALL)
     # looking for comand output
@@ -250,10 +246,8 @@ if '->Make Excel report' in answers["variables"]:
                 testExcel = line
             # using re.py to search for switch number
             if 'TESTCASE START -' in line and switchExcel not in line:
-                xex=[] 
-                xex =  re.search(r'\w\w\w\w\w\w\d(\d)?', line)
-                switchExcel = str(xex.group())
-                fourSwitch = str(xex.group())
+                switchExcel = re.search(r'\w\w\w\w\w\w\d(\d)?', line).group(0)
+                fourSwitch = switchExcel
                 two.append(switchExcel)
             #adding to list with errors
             for i in answers["variables"]:
@@ -300,10 +294,8 @@ if 'Enter Command :' in answers["variables"]:
                 testLog = line
             # using re.py to search for switch number
             if 'TESTCASE START -' in line and switchNumber1E not in line:
-                xlx=[]
-                countLogE = 0
-                xlx =  re.search(r'\w\w\w\w\w\w\d(\d)?', line)
-                switchNumber1E = str(xlx.group())
+                countLogE = 0 
+                switchNumber1E = re.search(r'\w\w\w\w\w\w\d(\d)?', line).group(0) 
                 three.append(switchNumber1E)
             # looking for comand output
             if line.startswith(cmd) and line not in cmdLogE:
