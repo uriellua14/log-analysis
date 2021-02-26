@@ -11,30 +11,31 @@
 
 
 ## Enter on Windows Terminal to install necessary libraries and python
+clone this repository
 
-python
+install python - "python"
 
-curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+download pip - "curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py"
 
-python get-pip.py
+install pip - "python get-pip.py"
 
-pip install -r requirements.txt
+install rewuirements - "pip install -r requirements.txt"
 
 
 
 ## Enter on Mac Terminal
 
-xcode-select --install
+install Xcode - "xcode-select --install"
 
-/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+download homebrew - "/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" "
 
-brew install python3
+install python - "brew install python3"
 
-curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+download pip - "curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py"
 
-python3 get-pip.py
+install pip = "python3 get-pip.py"
 
-pip install -r requirements.txt
+install requirements - "pip install -r requirements.txt"
 
 
 
