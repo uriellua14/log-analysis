@@ -7,7 +7,7 @@
 
 2. Download the log file to analyze 
 
-3. Install python, necesary libraries, and run tara.py
+3. Install python, necesary libraries (requirements.txt), and run tara.py
 
 
 ## Enter on Windows Terminal to install necessary libraries and python
@@ -18,18 +18,7 @@ curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 
 python get-pip.py
 
-pip install art==5.1
-
-pip install PyInquirer
-
-
-pip install numpy==1.19.3
-
- pip install openpyxl
-
-cd Downloads
-
-python tara.py
+pip install -r requirements.txt
 
 
 
@@ -45,15 +34,8 @@ curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 
 python3 get-pip.py
 
-pip install art
+pip install -r requirements.txt
 
-pip install PyInquirer
-
-pip install numpy==1.19.3
-
-cd Downloads
-
-python tara.py
 
 
 
