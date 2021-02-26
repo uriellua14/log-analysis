@@ -19,7 +19,7 @@ download pip - "curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py"
 
 install pip - "python get-pip.py"
 
-install rewuirements - "pip install -r requirements.txt"
+install requirements - "pip install -r requirements.txt"
 
 
 
