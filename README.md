@@ -3,15 +3,14 @@
 ### Program done to analyse long test reports that come in a tar.gz folder 
 
 ## Instructions
-1. Download the file tara.py 
+  1. Clone this repository - "git clone https://github.com/uriellua14/log-analysis.git" 
 
-2. Download the log file to analyze 
+2. Download the log file to analyze, in same folder as tara.py
 
 3. Install python, necesary libraries (requirements.txt), and run tara.py
 
 
 ## Enter on Windows Terminal to install necessary libraries and python
-clone this repository
 
 install python - "python"
 
