@@ -222,8 +222,10 @@ fourSwitch = 'first777#$'
 fourFails = 0
 do = 0
 sfp = []
-sfpee = str("sfpee ")
+sfpee = str("sfpee  ")
 sfpSwitch = 'first777#$'
+sfpCorner = 0
+sfpCount2 = 0
 #makes first sheet in excel - Test info
 if '->Make Excel report' in answers["variables"]:
     with open("logs.txt") as E:
@@ -240,22 +242,24 @@ if '->Make Excel report' in answers["variables"]:
                 one.append(line)
             # look for corner
 ############ add sfp info to SFP sheet in excel 
+            if 'Corner Name :' in line and 'PST' not in line:
+                sfpCorner += 1 
             if 'TESTCASE START -' in line and sfpSwitch not in line:
                 sfpSwitch = re.search(r'\w\w\w\w\w\w\d(\d)?', line).group(0)
-            if line.startswith(sfpee):
-                do = 1
-            if do == 1:
-                if " Transceiver" in line and line not in sfp:
-                    sfp.append(sfpSwitch)
-                    sfp.append(line)
-                if " Vendor PN" in line and line not in sfp:
-                    sfp.append(line)
-                if " Vendor SN" in line and line not in sfp:
-                    sfp.append(line)
-                if " Extended ID" in line and line not in sfp:
-                    sfp.append(line)
-                    do = 0
-############ add errors to second sheet in excel
+                sfp.append(sfpSwitch)
+            if 'sfpee  ' in line:
+                sfpCount2 += 1
+            if "QSFP/QSFP+ EEPROM in port" in line or "SFP/SFP+ EEPROM in port" in line:
+                sfp.append(line)
+            if " Transceiver" in line and sfpCorner <= 1 and sfpCount2 <=1:
+                sfp.append(line)
+            if " Vendor PN" in line and sfpCorner <= 1 and sfpCount2 <=1:
+                sfp.append(line)
+            if " Vendor SN" in line and sfpCorner <= 1 and sfpCount2 <=1:
+                sfp.append(line)
+            if " Extended ID" in line and sfpCorner <= 1 :
+                sfp.append(line)
+############ add errors to second sheet in excel 
             if 'Corner Name :' in line and 'PST' not in line and line not in corner:
                 cornerE = line
                 countE = 0
@@ -337,22 +341,26 @@ if 'Enter Command :' in answers["variables"]:
                         fullE = 0
 ################################################################
 #print to excel
-one = pd.Series(one)
-two = pd.Series(two)
+if len(one)>0:
+    one = pd.Series(one)
+if len(two)>0:
+    two = pd.Series(two)
 if 'Enter Command :' in answers["variables"]:
     three = pd.Series(three)
-four = pd.Series(four)
-if len(sfp)>1:
+if len(four)>0:
+    four = pd.Series(four)
+if len(sfp)>0:
     sfp = pd.Series(sfp)
 w = pd.ExcelWriter(nameEx)
-one.to_excel(w,'Test Info')
-two.to_excel(w,'Test Errors')
-if 'Enter Command :' in answers["variables"]:
-    three.to_excel(w,'Command Log')
-four.to_excel(w,'graphs')
-if do == 1:
-    sfp.to_excel(w,'SFP')
-w.save()
+if '->Make Excel report' in answers["variables"]:
+    one.to_excel(w,'Test Info')
+    two.to_excel(w,'Test Errors')
+    if 'Enter Command :' in answers["variables"]:
+        three.to_excel(w,'Command Log')
+    four.to_excel(w,'graphs')
+    if len(sfp)>0:
+        sfp.to_excel(w,'SFP')
+    w.save()
 quit()
 
 
