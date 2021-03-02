@@ -1,0 +1,9 @@
+pip install art==5.1
+
+pip install PyInquirer
+
+pip install numpy==1.19.3
+
+pip install openpyxl
+
+pip install colorama
