@@ -18,10 +18,16 @@ tprint('<<<Tar Analysis 2.0>>>')
 print(Fore.CYAN)
 name = input("Please enter the Tar folder name: ")
 print(Style.RESET_ALL)
+#thammarak get home directory
+from pathlib import Path
+home = str(Path.home())
+download_path = os.path.join(home, "Downloads\\")
+print(download_path)
 #so we dont have to tipe .tar.gz
 namet = name + ".tar.gz"
+path = os.path.join(download_path, namet)
 #open and unzip tar folder
-tar = tarfile.open(namet,"r:gz")
+tar = tarfile.open(path,"r:gz")
 tar.extractall()
 tar.close()
 ################################################################
@@ -357,7 +363,8 @@ if '->Make Excel report' in answers["variables"]:
     two.to_excel(w,'Test Errors')
     if 'Enter Command :' in answers["variables"]:
         three.to_excel(w,'Command Log')
-    four.to_excel(w,'graphs')
+    if len(four)>0:
+        four.to_excel(w,'graphs')
     if len(sfp)>0:
         sfp.to_excel(w,'SFP')
     w.save()
