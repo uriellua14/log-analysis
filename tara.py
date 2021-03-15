@@ -59,6 +59,9 @@ questions = [
                 'name': 'FAILED VALIDATION - Reported',
             },
             {
+                'name': 'FAILED - COMMAND TIMED OUT',
+            },
+            {
                 'name': '***err',
             },
             {
@@ -69,6 +72,9 @@ questions = [
             },
             {
                 'name': 'Write your own',
+            },
+            {
+                'name': 'RegEx query',
             },
              {
                 'name': '->Make Excel report',
@@ -89,6 +95,13 @@ answers = prompt(questions, style=style)
 if 'Write your own' in answers["variables"]:
     own = input("Please enter the error you are looking for: ")
     answers["variables"] = [own if i=='Write your own' else i for i in answers["variables"]]
+
+###################################################################
+#reads for new entry "write yout own"
+if 'RegEx query' in answers["variables"]:
+    regex = input("Please enter the regex pattern to search for: ")
+    regex = r"{}".format(regex)
+    answers["variables"] = [regex if i=='RegEx query' else i for i in answers["variables"]]
     
 ###################################################################
 #opens all the files and writes line by line in log.txt document
@@ -149,6 +162,8 @@ with open("logs.txt") as L:
     #adding to list with errors
         for i in answers["variables"]:
             if i in line and i not in fails:
+                fails.append(line)
+            elif  'RegEx query' in answers["variables"] and re.search(i, line) and not re.serach(i, fails):
                 fails.append(line)
         if len(fails) > 0 and 'TESTCASE END -' in line:
             count += 1
@@ -368,6 +383,7 @@ if '->Make Excel report' in answers["variables"]:
     if len(sfp)>0:
         sfp.to_excel(w,'SFP')
     w.save()
+input("Press enter to quit!")
 quit()
 
 
