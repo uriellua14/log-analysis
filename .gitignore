@@ -1,4 +1,7 @@
 # inore
+*.txt
+*.xlsx
+*/
 *.md.un~
 *.md~
 *.*~
