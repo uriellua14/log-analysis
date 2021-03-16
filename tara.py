@@ -255,7 +255,7 @@ if '->Make Excel report' in answers["variables"]:
                 sfp.append(sfpSwitch)
             if 'sfpee  ' in line:
                 sfpCount2 += 1
-            if "QSFP/QSFP+ EEPROM in port" in line or "SFP/SFP+ EEPROM in port" in line:
+            if "EEPROM in port" in line or "SFP/SFP+ EEPROM in port" in line:
                 sfp.append(line)
             if " Transceiver" in line and sfpCorner <= 1 and sfpCount2 <=1:
                 sfp.append(line)
