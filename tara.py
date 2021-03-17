@@ -308,9 +308,6 @@ cornerLE = ''
 switchNumber1E = 'first777#$'
 three = []
 cornerCountE = 0
-cmdSave = ''
-cmdNextCommand = []
-cmdSaveCommand = 0
 if 'Enter Command :' in answers["variables"]:
     with open("logs.txt") as B:
         for line in B:
@@ -331,22 +328,14 @@ if 'Enter Command :' in answers["variables"]:
                 switchNumber1E = re.search(r'\w\w\w\w\w\w\d(\d)?', line).group(0) 
                 three.append(switchNumber1E)
             # looking for comand output
-            if line.startswith(cmd):
-                line = str.split(',')
-                cdmSave = line[0]
-                cmdSaveCommand = 1
-            if cmdSaveCommand == 1 and len(cmdNextCommand) < 1:
-                line = str.split(',')
-                cdmNextCommand.append(line[0])
-                cmdSaveCommand = 0
             if line.startswith(cmd) and line not in cmdLogE:
                 cmdLogE.append(line)
-                cmdStartE =iE
-                cmdStopE = 1000000000
+                cmdStartE = iE
+                cmdStopE = 10000000
                 fullE = 1
             if iE >= cmdStartE and iE < cmdStopE and line not in cmdLogE:
                 cmdLogE.append(line)
-            if  cmdNextCommand[0] in line:
+            if "*********************************" in line or "----------------------------------" in line or "==========================================" in line:
                 cmdStopE = iE
             #print command output
             if 'TESTCASE END' and fullE == 1:
