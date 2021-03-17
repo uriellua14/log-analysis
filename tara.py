@@ -102,7 +102,9 @@ if 'RegEx query' in answers["variables"]:
     regex = input("Please enter the regex pattern to search for: ")
     regex = r"{}".format(regex)
     answers["variables"] = [regex if i=='RegEx query' else i for i in answers["variables"]]
-    
+    regex_flag = True
+else: regex_flag = False
+
 ###################################################################
 #opens all the files and writes line by line in log.txt document
 logs = open('logs.txt',"w+")
@@ -163,7 +165,7 @@ with open("logs.txt") as L:
         for i in answers["variables"]:
             if i in line and i not in fails:
                 fails.append(line)
-            elif  'RegEx query' in answers["variables"] and re.search(i, line) and not re.serach(i, fails):
+            elif regex_flag and re.search(i, line):
                 fails.append(line)
         if len(fails) > 0 and 'TESTCASE END -' in line:
             count += 1
@@ -297,6 +299,9 @@ if '->Make Excel report' in answers["variables"]:
             #adding to list with errors
             for i in answers["variables"]:
                 if i in line and i not in failsE:
+                    failsE.append(line)
+                    fourFails += 1
+                elif regex_flag and re.search(i, line):
                     failsE.append(line)
                     fourFails += 1
             if len(failsE) > 0 and 'TESTCASE END -' in line:
