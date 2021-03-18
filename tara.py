@@ -1,7 +1,6 @@
 from __future__ import print_function, unicode_literals
 from PyInquirer import style_from_dict, Token, prompt, Separator
 from pprint import pprint
-from art import *
 import os
 import tarfile
 from art import *
