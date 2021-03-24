@@ -127,7 +127,7 @@ with open("logs.txt") as L:
 cmdDo = 0
 if 'Enter Command :' in answers["variables"]:
     cmd = input("please enter Command to output log:")
-    print ('There are ' ,cornerCount1,'corners, Example for entry : 1 2 3 ')
+    print ('There are ' ,cornerCount1,'corners,  Example for entry : 1 2 3 ')
     cornerPrint1 = input("Write the number of corner separated by a space(type 0 for all):")
     cornerPrint = cornerPrint1.split()
     #makes list int
@@ -259,6 +259,7 @@ sfpee = str("sfpee  ")
 sfpSwitch = 'first777#$'
 sfpCorner = 0
 sfpCount2 = 0
+switch_count = []
 #makes first sheet in excel - Test info
 if '->Make Excel report' in answers["variables"]:
     with open("logs.txt") as E:
@@ -275,22 +276,25 @@ if '->Make Excel report' in answers["variables"]:
                 one.append(line)
             # look for corner
 ############ add sfp info to SFP sheet in excel 
-            if 'Corner Name :' in line and 'PST' not in line:
-                sfpCorner += 1 
             if 'TESTCASE START -' in line and sfpSwitch not in line:
                 sfpSwitch = re.search(r'\w\w\w\w\w\w\d(\d)?', line).group(0)
-                sfp.append(sfpSwitch)
-            if 'sfpee  ' in line:
+                if sfpSwitch not in switch_count:
+                    switch_count.append(sfpSwitch)
+            if '{sfpee}' in line:
                 sfpCount2 += 1
-            if "EEPROM in port" in line or "SFP/SFP+ EEPROM in port" in line:
+                if sfpCount2 <= len(switch_count):
+                    sfp.append('*************************************************')
+                    sfp.append(sfpSwitch)
+                    sfp.append('*************************************************')
+            if "EEPROM in port" in line and sfpCount2 <= len(switch_count):
                 sfp.append(line)
-            if " Transceiver" in line and sfpCorner <= 1 and sfpCount2 <=1:
+            if " Transceiver" in line and sfpCount2 <=  len(switch_count):
                 sfp.append(line)
-            if " Vendor PN" in line and sfpCorner <= 1 and sfpCount2 <=1:
+            if " Vendor PN" in line and sfpCount2 <= len(switch_count):
                 sfp.append(line)
-            if " Vendor SN" in line and sfpCorner <= 1 and sfpCount2 <=1:
+            if " Vendor SN" in line and sfpCount2 <=  len(switch_count):
                 sfp.append(line)
-            if " Extended ID" in line and sfpCorner <= 1 :
+            if " Extended ID" in line and sfpCount2 <=  len(switch_count):
                 sfp.append(line)
 ############ add errors to second sheet in excel 
             if 'Corner Name :' in line and 'PST' not in line and line not in corner:
@@ -400,7 +404,4 @@ if '->Make Excel report' in answers["variables"]:
     w.save()
 input("Press enter to quit!")
 quit()
-
-
-
 
