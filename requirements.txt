@@ -3,3 +3,4 @@ PyInquirer
 numpy==1.19.3
 openpyxl
 colorama
+pandas
