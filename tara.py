@@ -124,6 +124,7 @@ with open("logs.txt") as L:
             cornerCount1 +=1
 ###################################################################
 #reads for new entry "Enter Command"
+cmdDo = 0
 if 'Enter Command :' in answers["variables"]:
     cmd = input("please enter Command to output log:")
     print ('There are ' ,cornerCount1,'corners, Example for entry : 1 2 3 ')
@@ -132,7 +133,17 @@ if 'Enter Command :' in answers["variables"]:
     #makes list int
     for i in range(0, len(cornerPrint)): 
         cornerPrint[i] = int(cornerPrint[i]) 
-    cmd = cmd+' '
+    ##looks for next comand to know where to stop
+    cmd1 = cmd
+    cmd = cmd+' ' 
+    with open("logs.txt") as C: 
+        for line in C:
+            line = line.split(",",1)
+            if cmdDo == 1: 
+                cmdEnd = line[0]
+                cmdDo = 0
+            if cmd1 in line:
+                cmdDo = 1
 ###################################################################
 #look up for errors line by line 
 #varibles
@@ -214,7 +225,7 @@ if 'Enter Command :' in answers["variables"]:
                 full = 1
             if ii >= cmdStart and ii < cmdStop and line not in cmdLog:
                 cmdLog.append(line)
-            if "*********************************" in line or "----------------------------------" in line or "==========================================" in line:
+            if cmdEnd in line or 'Done executing all the given commands' in line:
                 cmdStop = ii
             #print command output
             if 'TESTCASE END' and full == 1:
@@ -354,7 +365,7 @@ if 'Enter Command :' in answers["variables"]:
                 fullE = 1
             if iE >= cmdStartE and iE < cmdStopE and line not in cmdLogE:
                 cmdLogE.append(line)
-            if "*********************************" in line or "----------------------------------" in line or "==========================================" in line:
+            if cmdEnd in line or 'Done executing all the given commands' in line:
                 cmdStopE = iE
             #print command output
             if 'TESTCASE END' and fullE == 1:
