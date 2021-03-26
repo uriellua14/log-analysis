@@ -120,7 +120,7 @@ cornerCount1 = 0
 corner1=[]
 with open("logs.txt") as L:
     for line in L:
-        if 'Corner Name :' in line and 'PST' not in line and 'PDT' not in line and line not in corner:
+        if 'Corner Name :' in line and 'PST' not in line and 'PDT' not in line:
             cornerCount1 +=1
 ###################################################################
 #reads for new entry "Enter Command"
