@@ -156,7 +156,7 @@ switchNumber = 'first777#$'
 with open("logs.txt") as L:
     for line in L:
     # look for corner
-        if 'Corner Name :' in line and 'PST' not in line and line not in corner:
+        if 'Corner Name :' in line and 'PST' not in line and 'PDT' not in line and line not in corner:
             corner = line
             count = 0
             print(Fore.BLACK)
@@ -297,7 +297,7 @@ if '->Make Excel report' in answers["variables"]:
             if " Extended ID" in line and sfpCount2 <=  len(switch_count):
                 sfp.append(line)
 ############ add errors to second sheet in excel 
-            if 'Corner Name :' in line and 'PST' not in line and line not in corner:
+            if 'Corner Name :' in line and 'PST' not in line and 'PDT' not in line and line not in corner:
                 cornerE = line
                 countE = 0
                 two.append(cornerE)
