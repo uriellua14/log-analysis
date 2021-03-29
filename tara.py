@@ -402,6 +402,5 @@ if '->Make Excel report' in answers["variables"]:
     if len(sfp)>0:
         sfp.to_excel(w,'SFP')
     w.save()
-input("Press enter to quit!")
 quit()
 
