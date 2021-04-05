@@ -61,6 +61,9 @@ questions = [
                 'name': 'FAILED - COMMAND TIMED OUT',
             },
             {
+                'name': 'Test(s) failed:',
+            },
+            {
                 'name': '***err',
             },
             {
