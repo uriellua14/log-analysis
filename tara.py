@@ -352,9 +352,9 @@ with open("logs.txt") as L:
     # look for corner
         if 'TESTCASE START ' in line and 'Testcase' in line and 'PDT' in line or 'PST' in line:
             if count_graph >= 1:
-                switch_graph1 = [switchNumber_graph + testcase_graph,'1']
+                switch_graph1 = [switchNumber_graph +" - "+ testcase_graph,'YES']
             else:
-                switch_graph1 = [switchNumber_graph + testcase_graph,'0']
+                switch_graph1 = [switchNumber_graph +" - "+ testcase_graph,'no']
             switchNumber_graph = re.search(r'\w\w\w\w\w\w\d(\d)?', line).group(0)
             testcase_graph = line[line.index('{') + len('{'):]
             testcase_graph = testcase_graph.replace('}\n',"")
@@ -367,8 +367,8 @@ with open("logs.txt") as L:
 #################################################################
 ## makes the data for the graph nicer 
 group_graph.pop(0)
-group_graph.sort()
-group_graphD = pd.DataFrame(group_graph, columns = ['switch + Testcase', 'error'])
+group_graphD = pd.DataFrame(group_graph, columns = ['switch - Testcase','error'])
+group_graph_count = group_graphD.pivot_table(index=['switch - Testcase','error'], aggfunc='size')
 ###########################################################
 ############add coomannd log if any to third sheet in excel 
 #variables
@@ -436,7 +436,7 @@ if '->Make Excel report' in answers["variables"]:
     if 'Enter Command :' in answers["variables"]:
         three.to_excel(w,'Command Log')
     if len(group_graphD)>0:
-        group_graphD.to_excel(w,'graphs')
+        group_graph_count.to_excel(w,'graphs')
     if len(sfp)>0:
         sfp.to_excel(w,'SFP')
     w.save()
