@@ -9,6 +9,8 @@ from colorama import init
 import re
 import pandas as pd
 import openpyxl
+from itertools import groupby 
+import matplotlib.pyplot as plt
 #################################################################
 init(convert=True)
 #pint program name
@@ -21,7 +23,6 @@ print(Style.RESET_ALL)
 from pathlib import Path
 home = str(Path.home())
 download_path = os.path.join(home, "Downloads\\")
-print(download_path)
 #so we dont have to tipe .tar.gz
 namet = name + ".tar.gz"
 path = os.path.join(download_path, namet)
@@ -335,6 +336,40 @@ if '->Make Excel report' in answers["variables"]:
             if 'TESTCASE END -' in line:
                 failsE.clear()
 ###########################################################
+#### graph to excel
+#varibles
+count_graph = 0
+corner = ''
+fails = []
+switch = []
+testcase_graph = 'first777#$'
+switchNumber_graph = 'first777#$'
+switch_graph1 = []
+group_graph = []
+#opens text file to read
+with open("logs.txt") as L:
+    for line in L:
+    # look for corner
+        if 'TESTCASE START ' in line and 'Testcase' in line and 'PDT' in line or 'PST' in line:
+            if count_graph >= 1:
+                switch_graph1 = [switchNumber_graph,testcase_graph,'1']
+            else:
+                switch_graph1 = [switchNumber_graph,testcase_graph,'0']
+            switchNumber_graph = re.search(r'\w\w\w\w\w\w\d(\d)?', line).group(0)
+            testcase_graph = line[line.index('{') + len('{'):]
+            testcase_graph = testcase_graph.replace('}\n',"")
+            switchNumber_graph = re.sub("[^0123456789\.]","",switchNumber_graph)
+            count_graph = 0
+            group_graph.append(switch_graph1)
+        for i in answers["variables"]:
+            if i in line:
+                count_graph += 1
+#################################################################
+## makes the data for the graph nicer 
+group_graph.pop(0)
+group_graph.sort()
+group_graphD = pd.DataFrame(group_graph, columns = ['switch','Testcase', 'error'])
+###########################################################
 ############add coomannd log if any to third sheet in excel 
 #variables
 cmdLogE = []
@@ -400,8 +435,8 @@ if '->Make Excel report' in answers["variables"]:
     two.to_excel(w,'Test Errors')
     if 'Enter Command :' in answers["variables"]:
         three.to_excel(w,'Command Log')
-    if len(four)>0:
-        four.to_excel(w,'graphs')
+    if len(group_graphD)>0:
+        group_graphD.to_excel(w,'graphs')
     if len(sfp)>0:
         sfp.to_excel(w,'SFP')
     w.save()
