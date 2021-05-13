@@ -436,7 +436,7 @@ if '->Make Excel report' in answers["variables"]:
     if 'Enter Command :' in answers["variables"]:
         three.to_excel(w,'Command Log')
     if len(group_graphD)>0:
-        group_graph_count.to_excel(w,'graphs')
+        group_graph_count.to_excel(w,'Testcase Error')
     if len(sfp)>0:
         sfp.to_excel(w,'SFP')
     w.save()
