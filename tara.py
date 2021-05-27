@@ -264,6 +264,7 @@ sfpSwitch = 'first777#$'
 sfpCorner = 0
 sfpCount2 = 0
 switch_count = []
+countE=0
 #makes first sheet in excel - Test info
 if '->Make Excel report' in answers["variables"]:
     with open("logs.txt") as E:
