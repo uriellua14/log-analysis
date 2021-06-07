@@ -5,7 +5,7 @@
 ## Instructions
   1. Clone this repository - "git clone https://github.com/uriellua14/log-analysis.git" 
 
-2. Download the log file to analyze, in same folder as tara.py
+2. Download the log file to analyze
 
 3. Install python, necesary libraries (requirements.txt), and run tara.py
 
