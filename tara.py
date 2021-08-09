@@ -11,25 +11,37 @@ import pandas as pd
 import openpyxl
 from itertools import groupby 
 import matplotlib.pyplot as plt
+from pathlib import Path
+import shutil
 #################################################################
 init(convert=True)
 #pint program name
 tprint('<<<Tar Analysis 2.0>>>')
 #ask for folder name
-print(Fore.CYAN)
-name = input("Please enter the Tar folder name: ")
+print(Fore.CYAN) 
+name = input("Please enter the Tar folder name:")
 print(Style.RESET_ALL)
-#thammarak get home directory
-from pathlib import Path
+##thammarak get home directory
 home = str(Path.home())
 download_path = os.path.join(home, "Downloads\\")
 #so we dont have to tipe .tar.gz
 namet = name + ".tar.gz"
 path = os.path.join(download_path, namet)
+nameU = name+'unzip'
 #open and unzip tar folder
 tar = tarfile.open(path,"r:gz")
 tar.extractall()
 tar.close()
+os.mkdir(nameU)
+#### to unzip files inside zip folder:)
+for i in os.listdir(name):
+    foldername = os.path.join(name, i)
+    os.makedirs(i)
+    y = tarfile.open(foldername,"r:gz")
+    y.extractall(i)
+    y.close()
+    shutil.move(i,nameU)
+     
 ################################################################
 #CLI to ask what errors to look for 
 style = style_from_dict({
@@ -98,7 +110,6 @@ answers = prompt(questions, style=style)
 if 'Write your own' in answers["variables"]:
     own = input("Please enter the error you are looking for: ")
     answers["variables"] = [own if i=='Write your own' else i for i in answers["variables"]]
-
 ###################################################################
 #reads for new entry "write yout own"
 if 'RegEx query' in answers["variables"]:
@@ -111,7 +122,7 @@ else: regex_flag = False
 ###################################################################
 #opens all the files and writes line by line in log.txt document
 logs = open('logs.txt',"w+")
-for path, subdirs, files in os.walk(name):
+for path,subdirs,files in os.walk(nameU):
         for i in files:
             filename = os.path.join(path, i)
             ### writing to text file
@@ -367,9 +378,6 @@ with open("logs.txt") as L:
                 count_graph += 1
 #################################################################
 ## makes the data for the graph nicer 
-group_graph.pop(0)
-group_graphD = pd.DataFrame(group_graph, columns = ['switch - Testcase','error'])
-group_graph_count = group_graphD.pivot_table(index=['switch - Testcase','error'], aggfunc='size')
 ###########################################################
 ############add coomannd log if any to third sheet in excel 
 #variables
@@ -441,5 +449,5 @@ if '->Make Excel report' in answers["variables"]:
     if len(sfp)>0:
         sfp.to_excel(w,'SFP')
     w.save()
-quit()
+
 
