@@ -1,9 +1,10 @@
 # log-analysis
 I created this software so it would be easier for EDVT engineers to find patterns when looking for errors during testing.
-
+# This is how the program CLI looks after running
 ![image](https://user-images.githubusercontent.com/52641414/128780913-612bc9fe-7ed6-4161-860f-d4e9b71af2ea.png)
 
-
+#This a example of how the errors are printed
+In this Test only switch4 had problems 
  ![image](https://user-images.githubusercontent.com/52641414/128780974-14bcdbce-61f2-4df5-a2e3-348b19c1d104.png)
 
 
