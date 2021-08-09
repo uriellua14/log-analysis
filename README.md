@@ -1,6 +1,12 @@
 # log-analysis
 I created this software so it would be easier for EDVT engineers to find patterns when looking for errors during testing.
 
+![image](https://user-images.githubusercontent.com/52641414/128780913-612bc9fe-7ed6-4161-860f-d4e9b71af2ea.png)
+
+
+ ![image](https://user-images.githubusercontent.com/52641414/128780974-14bcdbce-61f2-4df5-a2e3-348b19c1d104.png)
+
+
 This program takes all the log files from the automated testing program we use in Cisco and merges them together in a text file that can be well over one million lines. I decided to merge all the files to have one single text document that contains all the information available from the test. This file includes the logs from all the equipment used in the test and the CSV files that automate the testing.
 
 Then from there the CLI gives you options on what errors to look for and then prints out the found error and the exact location on the test where they where found, separating the errors printed by system number and test temperature. Some other abilities from the CLI program are:
