@@ -284,11 +284,11 @@ if '->Make Excel report' in answers["variables"]:
                 one.append(line)
             if "job_name" in line and  len(one)<2:
                 one.append(line)
-            if "Model Number" in line and line not in one:
+            if "MODEL_NUM" in line and line not in one:
                 one.append(line)
-            if "Motherboard Serial Number" in line and line not in one:
+            if "MOTHERBOARD_SERIAL_NUM" in line and line not in one:
                 one.append(line)
-            if "System Serial Number" in line and line not in one:
+            if "SYSTEM_SERIAL_NUM" in line and line not in one:
                 one.append(line)
             # look for corner
 ############ add sfp info to SFP sheet in excel 
@@ -378,6 +378,10 @@ with open("logs.txt") as L:
                 count_graph += 1
 #################################################################
 ## makes the data for the graph nicer 
+## makes the data for the graph nicer 
+group_graph.pop(0)
+group_graphD = pd.DataFrame(group_graph, columns = ['switch - Testcase','error'])
+group_graph_count = group_graphD.pivot_table(index=['switch - Testcase','error'], aggfunc='size')
 ###########################################################
 ############add coomannd log if any to third sheet in excel 
 #variables
