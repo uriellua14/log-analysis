@@ -218,7 +218,7 @@ if 'Enter Command :' in answers["variables"]:
     # look for corner
             if 'Corner Name :' in line and 'PST' not in line and 'PDT' not in line and line not in corner:
                 corner = line
-                count = 0
+                countCommand = 0
                 cornerCount += 1 
                 print(Fore.BLACK)
                 print (Back.WHITE+'                     >  '+corner)
@@ -228,19 +228,19 @@ if 'Enter Command :' in answers["variables"]:
                 testn = line
     # using re.py to search for switch number
             if 'TESTCASE START -' in line and switchNumber1 not in line:
-                count = 0
+                countCommand = 0
                 switchNumber1 = re.search(r'\w\w\w\w\w\w\d(\d)?', line).group(0)
                 print (Fore.GREEN+(switchNumber1))
                 print(Style.RESET_ALL)
     # looking for comand output
-            if cmd in line and line not in cmdLog:
+            if line.startswith(cmd) and line not in cmdLog:
                 cmdLog.append(line)
                 cmdStart = ii
                 cmdStop = 10000000
                 full = 1
             if ii >= cmdStart and ii < cmdStop and line not in cmdLog:
                 cmdLog.append(line)
-            if cmdEnd in line or 'Done executing all the given commands' or 'Finished executing command:' in line:
+            if cmdEnd in line or 'Done executing all the given commands' in line:
                 cmdStop = ii
             #print command output
             if 'TESTCASE END' and full == 1:
