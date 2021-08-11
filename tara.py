@@ -149,15 +149,14 @@ if 'Enter Command :' in answers["variables"]:
     for i in range(0, len(cornerPrint)): 
         cornerPrint[i] = int(cornerPrint[i]) 
     ##looks for next comand to know where to stop
-    cmd1 = cmd
-    cmd = cmd+' ' 
+    
     with open("logs.txt") as C: 
         for line in C:
             line = line.split(",",1)
             if cmdDo == 1: 
                 cmdEnd = line[0]
                 cmdDo = 0
-            if cmd1 in line:
+            if cmd in line:
                 cmdDo = 1
 ###################################################################
 #look up for errors line by line 
@@ -209,6 +208,7 @@ full = 0
 cornerCount = 0
 switchNumber1 = 'first777#$'
 if 'Enter Command :' in answers["variables"]:
+    cmd = cmd + ' '
     print(Fore.BLACK)
     print (Back.RED+'Command Log Output')
     print(Style.RESET_ALL)
@@ -233,14 +233,14 @@ if 'Enter Command :' in answers["variables"]:
                 print (Fore.GREEN+(switchNumber1))
                 print(Style.RESET_ALL)
     # looking for comand output
-            if line.startswith(cmd) and line not in cmdLog:
+            if cmd in line and line not in cmdLog:
                 cmdLog.append(line)
                 cmdStart = ii
                 cmdStop = 10000000
                 full = 1
             if ii >= cmdStart and ii < cmdStop and line not in cmdLog:
                 cmdLog.append(line)
-            if cmdEnd in line or 'Done executing all the given commands' in line:
+            if cmdEnd in line or 'Done executing all the given commands' or 'Finished executing command:' in line:
                 cmdStop = ii
             #print command output
             if 'TESTCASE END' and full == 1:
@@ -383,7 +383,7 @@ group_graph.pop(0)
 group_graphD = pd.DataFrame(group_graph, columns = ['switch - Testcase','error'])
 group_graph_count = group_graphD.pivot_table(index=['switch - Testcase','error'], aggfunc='size')
 ###########################################################
-############add coomannd log if any to third sheet in excel 
+############add commannd log if any to third sheet in excel 
 #variables
 cmdLogE = []
 cmdStartE = 10000000
@@ -398,7 +398,7 @@ if 'Enter Command :' in answers["variables"]:
         for line in B:
             iE += 1
             # look for corner
-            if 'Corner Name :' in line and 'PST' not in line and 'PDT' not in line and line not in corner:
+            if 'Corner Name :' in line and 'PST' not in line and 'PDT' not in line and line not in cornerLE:
                 cornerLE = line
                 cornerLE = '---------------'+ cornerLE
                 countLogE = 0
