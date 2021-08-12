@@ -208,6 +208,7 @@ full = 0
 cornerCount = 0
 switchNumber1 = 'first777#$'
 if 'Enter Command :' in answers["variables"]:
+    corner = ''
     cmd = cmd + ' '
     print(Fore.BLACK)
     print (Back.RED+'Command Log Output')
@@ -218,17 +219,15 @@ if 'Enter Command :' in answers["variables"]:
     # look for corner
             if 'Corner Name :' in line and 'PST' not in line and 'PDT' not in line and line not in corner:
                 corner = line
-                countCommand = 0
-                cornerCount += 1 
                 print(Fore.BLACK)
                 print (Back.WHITE+'                     >  '+corner)
                 print(Style.RESET_ALL)
+                cornerCount += 1 
     #Looks for Testcase number
             if 'TESTCASE START -' in line :
                 testn = line
     # using re.py to search for switch number
             if 'TESTCASE START -' in line and switchNumber1 not in line:
-                countCommand = 0
                 switchNumber1 = re.search(r'\w\w\w\w\w\w\d(\d)?', line).group(0)
                 print (Fore.GREEN+(switchNumber1))
                 print(Style.RESET_ALL)
@@ -272,6 +271,7 @@ do = 0
 sfp = []
 sfpee = str("sfpee  ")
 sfpSwitch = 'first777#$'
+InfoSwitch = 'first777#$'
 sfpCorner = 0
 sfpCount2 = 0
 switch_count = []
@@ -284,6 +284,11 @@ if '->Make Excel report' in answers["variables"]:
                 one.append(line)
             if "job_name" in line and  len(one)<2:
                 one.append(line)
+            if 'TESTCASE START -' in line and InfoSwitch not in line:
+                InfoSwitch = re.search(r'\w\w\w\w\w\w\d(\d)?', line).group(0)
+                InfoSwitch = '---------------------->' + InfoSwitch
+                if InfoSwitch not in one: 
+                    one.append(InfoSwitch)
             if "MODEL_NUM" in line and line not in one:
                 one.append(line)
             if "MOTHERBOARD_SERIAL_NUM" in line and line not in one:
