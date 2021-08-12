@@ -1,5 +1,5 @@
 # log-analysis
-I created this software so it would be easier for EDVT engineers in cisco to find patterns when looking for errors during testing using the log files from the test.
+I created this software so it would be easier for EDVT engineers to find patterns when looking for errors during testing using the log files from the test.
 # This is how the program CLI looks after running
 ![image](https://user-images.githubusercontent.com/52641414/128780913-612bc9fe-7ed6-4161-860f-d4e9b71af2ea.png)
 
