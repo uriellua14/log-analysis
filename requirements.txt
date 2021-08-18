@@ -6,3 +6,4 @@ colorama
 pandas
 matplotlib
 pathlib
+easygui
