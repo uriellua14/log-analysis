@@ -13,14 +13,17 @@ from itertools import groupby
 import matplotlib.pyplot as plt
 from pathlib import Path
 import shutil
+import easygui
 #################################################################
 init(convert=True)
 #pint program name
 tprint('<<<Tar Analysis 2.0>>>')
 #ask for folder name
 print(Fore.CYAN) 
-name = input("Please enter the Tar folder name:")
+#name = input("Please enter the Tar folder name:")
 print(Style.RESET_ALL)
+name = easygui.fileopenbox()
+name = name[-12:-7]
 ##thammarak get home directory
 home = str(Path.home())
 download_path = os.path.join(home, "Downloads\\")
