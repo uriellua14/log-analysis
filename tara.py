@@ -372,9 +372,9 @@ with open("logs.txt") as L:
     # look for corner
         if 'TESTCASE START ' in line and 'Testcase' in line and 'PDT' in line or 'PST' in line:
             if count_graph >= 1:
-                switch_graph1 = [switchNumber_graph +" - "+ testcase_graph,'YES']
+                switch_graph1 = [switchNumber_graph +" - "+ testcase_graph,'Failed']
             else:
-                switch_graph1 = [switchNumber_graph +" - "+ testcase_graph,'no']
+                switch_graph1 = [switchNumber_graph +" - "+ testcase_graph,'Passed']
             switchNumber_graph = re.search(r'\w\w\w\w\w\w\d(\d)?', line).group(0)
             testcase_graph = line[line.index('{') + len('{'):]
             testcase_graph = testcase_graph.replace('}\n',"")
